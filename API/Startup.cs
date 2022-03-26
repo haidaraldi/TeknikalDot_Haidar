@@ -32,6 +32,7 @@ namespace API
                 });
             services.AddDbContext<ApplicationContext>(x => x.UseSqlServer(Configuration.GetConnectionString("myConnectionString")).UseLazyLoadingProxies());
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
