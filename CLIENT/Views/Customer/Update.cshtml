@@ -1,0 +1,71 @@
+﻿@using CLIENT.ViewModel;
+
+@model MasterDataVM
+<!-- Page-Title -->
+@{
+    ViewData["Title"] = "Update Customer";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="btn-group pull-right">
+                <ol class="breadcrumb hide-phone p-0 m-0">
+                    <li class="breadcrumb-item"><a href="#">Customers</a></li>
+                    <li class="breadcrumb-item active">Update Customer</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Update Customer</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <form method="post">
+                    <div class="form-group row" hidden>
+                        <label for="example-month-input" asp-for="Customer.CustomerId" class="col-sm-2 col-form-label">Customer ID</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" asp-for="Customer.CustomerId" readonly>
+                            <span asp-validation-for="Customer.CustomerId" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Customer.FirstName" class="col-sm-2 col-form-label">First Name<span class="req-star">*</span></label>
+                        <div class="col-sm-3">
+                            <input class="form-control" asp-for="Customer.FirstName" id="example-text-input">
+                            <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Customer.LastName" class="col-sm-2 col-form-label">Last Name<span class="req-star">*</span></label>
+                        <div class="col-sm-3">
+                            <input class="form-control" asp-for="Customer.LastName" id="example-text-input">
+                            <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Customer.Address" class="col-sm-2 col-form-label">Address<span class="req-star">*</span></label>
+                        <div class="col-sm-3">
+                            <input class="form-control" asp-for="Customer.Address" id="example-text-input">
+                            <span asp-validation-for="Customer.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button style="margin-right:.5em" type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                        <a class="btn btn-danger waves-effect waves-light" asp-controller="Customer" asp-action="Index">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

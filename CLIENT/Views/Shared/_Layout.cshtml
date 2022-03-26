@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CLIENT</title>
+    <title>@ViewData["Title"] - Project DOT</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,9 +12,6 @@
     <meta content="Themesbrand" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
 
     <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <!-- DataTables -->
@@ -29,15 +26,17 @@
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="~/orgchart/css/jquery.orgchart.css" rel="stylesheet" />
     <link href="~/css/fixedColumns.dataTables.css" rel="stylesheet" />
     <link href="~/css/jquery.dataTables.css" rel="stylesheet" />
 </head>
 <body>
+    <!-- Loader -->
+    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CLIENT</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Project DOT</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -46,6 +45,9 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Manage Data</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -63,7 +65,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - CLIENT - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - DOT Project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -111,6 +113,475 @@
     <script src="~/assets/js/app.js"></script>
     <script src="~/js/dataTables.fixedColumns.js"></script>
 
+    <!-- Moment js -->
+    <script src="~/plugins/moment/moment.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    :root {
+        --primary-color: #302AE6;
+        --secondary-color: #536390;
+        --font-color: #424242;
+        --bg-color: #fff;
+        --heading-color: #292922;
+        --nav-menu-active-color: #F0F0F0;
+        --icon-color: #302AE6;
+        --bg-color-search-table: white;
+        --color-btn-danger: #ea553d;
+        --color-btn-success: #4ac18e;
+        --color-btn-primary: #519ce0;
+        --grafik-fill: #ffffff;
+        --grafik-title-fill: #7cb5ec;
+        --color-mandatory-field: #FB0101;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--font-color);
+        min-height: 1000px;
+    }
+
+    [data-theme="dark"] {
+        --primary-color: #9A97F3;
+        --secondary-color: #818cab;
+        --font-color: #e1e1ff;
+        --bg-color: #263238;
+        --heading-color: #818cab;
+        --nav-menu-active-color: #283C43;
+        --icon-color: #9A97F3;
+        --bg-color-search-table: #293438;
+        --color-btn-danger: #B03F2E;
+        --color-btn-success: #37916C;
+        --color-btn-primary: #083F73;
+        --grafik-fill: #263238;
+        --grafik-title-fill: #7cb5ec;
+        --color-mandatory-field: #C82828;
+    }
+
+    i {
+        color: var(--font-color) !important;
+    }
+
+    .paginate_button page-item previous disabled {
+        background-color: var(--bg-color-search-table) !important;
+        color: var(--font-color) !important;
+    }
+
+    path.highcharts-point highcharts-color-1 {
+        fill: var(--font-color) !important;
+    }
+
+    text.highcharts-title {
+        fill: var(--font-color) !important;
+    }
+
+    table.dataTable td {
+        vertical-align: middle;
+    }
+
+    .DTFC_LeftBodyLiner {
+        padding: 0;
+        margin: -7px auto;
+        background-color: var(--bg-color);
+        overflow-y: unset !important
+    }
+
+    .DTFC_RightBodyLiner {
+        overflow-y: unset !important
+    }
+
+    .DTFC_LeftHeadWrapper {
+        background-color: var(--bg-color);
+        margin-bottom: -5px;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        color: var(--font-color) !important;
+        margin-top: 5px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    table.dataTable.nowrap th, table.dataTable.nowrap td {
+        background-color: var(--bg-color) !important;
+    }
+
+    path.highcharts-tracker-line {
+        stroke: var(--font-color) !important;
+        stroke-width: 2 !important;
+    }
+
+    a.page-link {
+        background-color: var(--bg-color) !important;
+        margin-top: 15px;
+        color: var(--font-color);
+    }
+
+        a.page-link:hover {
+            color: var(--font-color);
+        }
+
+    .page-item.active .page-link {
+        color: var(--font-color);
+    }
+
+    path.highcharts-point highcharts-color-1 {
+        fill: var(--font-color) !important;
+    }
+
+    .dropdown-menu.dropdown-menu-right {
+        background-color: var(--bg-color) !important;
+        color: var(--font-color) !important;
+    }
+
+    a.dropdown-item:hover {
+        background-color: var(--nav-menu-active-color) !important;
+        color: var(--font-color) !important;
+    }
+
+    a.dropdown-item {
+        background-color: var(--bg-color) !important;
+        color: var(--font-color) !important;
+    }
+
+    ul.highcharts-menu {
+        background: var(--bg-color) !important;
+        color: var(--font-color) !important;
+    }
+
+    li.highcharts-menu-item {
+        color: var(--font-color) !important;
+    }
+
+    rect.highcharts-button-box {
+        fill: var(--bg-color) !important;
+    }
+
+    rect.highcharts-point highcharts-color-0 highcharts-point-hover {
+        fill: black !important;
+    }
+
+    button.highcharts-a11y-proxy-button highcharts-no-tooltip {
+        color: var(--font-color) !important;
+    }
+
+    .navbar-custom {
+        background-color: var(--bg-color) !important;
+    }
+
+    text {
+        fill: var(--font-color) !important;
+    }
+
+    .navigation-menu > li > a {
+        color: var(--font-color) !important;
+    }
+
+    .div.dataTables_wrapper div.dataTables_length select {
+        background-color: var(--bg-color-search-table);
+        color: var(--font-color);
+    }
+
+    text.highcharts-axis-title {
+        fill: var(--grafik-title-fill) !important;
+    }
+
+    .btn-danger {
+        background-color: var(--color-btn-danger) !important;
+        border-color: var(--color-btn-danger) !important;
+    }
+
+    .btn-success {
+        background-color: var(--color-btn-success) !important;
+        border-color: var(--color-btn-success) !important;
+    }
+
+    .highcharts-background {
+        fill: var(--grafik-fill) !important;
+    }
+
+    select.form-control {
+        background-color: var(--bg-color) !important;
+        color: var(--font-color) !important;
+    }
+
+    text {
+        color: var(--font-color) !important;
+    }
+
+    .orgchart.l2r {
+        margin-left: -52px;
+        background-color: var(--bg-color) !important;
+        width: stretch;
+    }
+
+    .modal-content {
+        background-color: var(--bg-color) !important;
+    }
+
+    input.form-control {
+        background-color: var(--bg-color) !important;
+        color: var(--font-color) !important;
+    }
+
+    button.close {
+        color: var(--font-color) !important;
+    }
+
+    .navigation-menu > li {
+        color: var(--font-color) !important;
+    }
+
+        .navigation-menu > li .submenu {
+            background-color: var(--bg-color) !important;
+        }
+
+    .has-submenu.active {
+        background-color: var(--nav-menu-active-color) !important;
+    }
+
+        .has-submenu.active .submenu li.active {
+            background-color: var(--nav-menu-active-color) !important;
+        }
+
+    .navigation-menu > li .submenu li a:hover {
+        color: var(--font-color) !important;
+        font-weight: bold;
+    }
+
+    .navigation-menu > li .submenu li a {
+        color: var(--font-color) !important;
+    }
+
+    .paginate_button page-item previous disabled {
+        background-color: var(--bg-color-search-table) !important;
+    }
+
+    .card {
+        background-color: var(--bg-color);
+    }
+
+    .page-title-box .breadcrumb .breadcrumb-item a {
+        color: var(--font-color);
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+        color: var(--font-color);
+        background-color: var(--bg-color-search-table);
+    }
+
+    footer {
+        background-color: var(--bg-color) !important;
+        color: var(--font-color);
+        border-color: var(--font-color);
+    }
+
+    td {
+        color: var(--font-color);
+    }
+
+    label {
+        color: var(--font-color);
+    }
+
+    .table th {
+        font-family: "Roboto", sans-serif;
+        color: var(--font-color) !important;
+        font-weight: bold;
+    }
+
+    .table.dataTable.no-footer {
+        border-bottom: 1px solid var(--font-color) !important;
+    }
+
+    tr {
+        color: var(--font-color);
+    }
+
+    .orgchart {
+        box-sizing: content-box !important;
+    }
+
+    div#chart-container {
+        background-color: var(--bg-color) !important;
+        width: 100%;
+        height: 15510px;
+    }
+
+    .theme-switch-wrapper {
+        display: flex;
+        margin-top: 1.5em;
+        /*margin-left: 2em;*/
+    }
+
+    .theme-switch {
+        display: inline-block;
+        height: 26px;
+        position: relative;
+        width: 45px;
+    }
+
+        .theme-switch input {
+            display: none;
+        }
+
+    .slider {
+        background-color: #ccc;
+        bottom: 0;
+        cursor: pointer;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: .4s;
+    }
+
+    span.req-star {
+        color: var(--color-mandatory-field) !important;
+    }
+
+    .slider:before {
+        background-color: #fff;
+        bottom: 4px;
+        content: "";
+        height: 18px;
+        left: 4px;
+        position: absolute;
+        transition: .4s;
+        width: 18px;
+    }
+
+    input:checked + .slider {
+        background-color: #66bb6a;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .breadcrumb-item.active {
+        color: #6c757d;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .breadcrumbs {
+        /*centering*/
+        display: inline-block;
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+        border-radius: 5px;
+        /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+        counter-reset: flag;
+    }
+
+        .breadcrumbs a {
+            text-decoration: none;
+            outline: none;
+            display: block;
+            float: left;
+            font-size: 12px;
+            line-height: 36px;
+            color: white;
+            /*need more margin on the left of links to accomodate the numbers*/
+            padding: 0 10px 0 60px;
+            background: #666;
+            background: linear-gradient(#666, #333);
+            position: relative;
+        }
+            /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+            .breadcrumbs a:first-child {
+                padding-left: 46px;
+                border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+            }
+
+                .breadcrumbs a:first-child:before {
+                    left: 14px;
+                }
+
+            .breadcrumbs a:last-child {
+                border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+                padding-right: 20px;
+            }
+
+            /*hover/active styles*/
+            .breadcrumbs a.active, .breadcrumbs a:hover {
+                background: #333;
+                background: linear-gradient(#333, #000);
+            }
+
+                .breadcrumbs a.active:after, .breadcrumbs a:hover:after {
+                    background: #333;
+                    background: linear-gradient(135deg, #333, #000);
+                }
+
+            /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+            .breadcrumbs a:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: -18px; /*half of square's length*/
+
+                width: 36px;
+                height: 36px;
+                transform: scale(0.707) rotate(45deg);
+                /*we need to prevent the arrows from getting buried under the next link*/
+                z-index: 1;
+                /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+                background: #666;
+                background: linear-gradient(135deg, #666, #333);
+                /*stylish arrow design using box shadow*/
+                box-shadow: 2px -2px 0 2px rgba(0, 0, 0, 0.4), 3px -3px 0 2px rgba(255, 255, 255, 0.1);
+                border-radius: 0 5px 0 50px;
+            }
+            /*we dont need an arrow after the last link*/
+            .breadcrumbs a:last-child:after {
+                content: none;
+            }
+            /*we will use the :before element to show numbers*/
+            .breadcrumbs a:before {
+                content: counter(flag);
+                counter-increment: flag;
+                /*some styles now*/
+                border-radius: 100%;
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                margin: 8px 0;
+                position: absolute;
+                top: 0;
+                left: 30px;
+                background: #444;
+                background: linear-gradient(#444, #222);
+                font-weight: bold;
+            }
+
+
+    .flat a, .flat a:after {
+        background: white;
+        color: black;
+        transition: all 0.5s;
+    }
+
+        .flat a:before {
+            background: white;
+            box-shadow: 0 0 0 1px #ccc;
+        }
+
+        .flat a:hover, .flat a.active,
+        .flat a:hover:after, .flat a.active:after {
+            background: #4997eb;
+        }
+</style>
