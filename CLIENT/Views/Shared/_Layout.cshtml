@@ -4,8 +4,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CLIENT</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta content="Admin Dashboard" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables -->
+    <link href="~/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="~/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!--Jquery steps CSS 1-->
+    <link rel="stylesheet" href="~/plugins/jquery-steps/jquery.steps.css">
+
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/orgchart/css/jquery.orgchart.css" rel="stylesheet" />
+    <link href="~/css/fixedColumns.dataTables.css" rel="stylesheet" />
+    <link href="~/css/jquery.dataTables.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -43,6 +69,48 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/modernizr.min.js"></script>
+    <script src="~/assets/js/waves.js"></script>
+    <script src="~/assets/js/jquery.slimscroll.js"></script>
+    <script src="~/assets/js/jquery.nicescroll.js"></script>
+    <script src="~/assets/js/jquery.scrollTo.min.js"></script>
+
+    <script src="~/plugins/jquery-steps/jquery.steps.min.js"></script>
+    <!-- KNOB JS -->
+    <script src="~/plugins/jquery-knob/excanvas.js"></script>
+    <script src="~/plugins/jquery-knob/jquery.knob.js"></script>
+
+    <!-- Required datatable js -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="~/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/jszip.min.js"></script>
+    <script src="~/plugins/datatables/pdfmake.min.js"></script>
+    <script src="~/plugins/datatables/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+    <!-- Datatable init js -->
+    <script src="~/assets/pages/datatables.init.js"></script>
+    <script src="~/plugins/jquery-steps/jquery.steps.min.js"></script>
+
+    @*Sweet Alert*@
+    <script src="~/plugins/sweet-alert2/sweetalert2.all.min.js"></script>
+    <script src="~/assets/pages/sweet-alert.init.js"></script>
+    <script type="text/javascript" src="~/plugins/parsleyjs/parsley.min.js"></script>
+
+    <!-- App js -->
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/js/dataTables.fixedColumns.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
