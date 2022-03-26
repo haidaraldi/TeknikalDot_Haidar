@@ -1,0 +1,78 @@
+﻿@using CLIENT.ViewModel;
+
+@model MasterDataVM
+<!-- Page-Title -->
+@{
+    ViewData["Title"] = "Update Invoice";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="btn-group pull-right">
+                <ol class="breadcrumb hide-phone p-0 m-0">
+                    <li class="breadcrumb-item"><a href="#">Invoices</a></li>
+                    <li class="breadcrumb-item active">Update Invoice</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Update Invoice</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title end breadcrumb -->
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <form method="post">
+                    <div class="form-group row">
+                        <label for="example-month-input" asp-for="Invoice.Id" class="col-sm-2 col-form-label">Invoice ID</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" asp-for="Invoice.Id" readonly>
+                            <span asp-validation-for="Invoice.Id" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Invoice.CustomerId" class="col-sm-2 col-form-label">Customer Name<span class="req-star">*</span></label>
+                        <div class="col-sm-3">
+                            <select disabled="disabled" class="form-control" asp-for="Invoice.CustomerId">
+                                <option value="@Model.Invoice.CustomerId" selected="selected">@Model.Invoice.Customer.FirstName @Model.Invoice.Customer.LastName</option>
+                            </select>
+                            <input type="hidden" asp-for="Invoice.CustomerId" value="@Model.Invoice.CustomerId" />
+                            <span asp-validation-for="Invoice.Id" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Customer.LastName" class="col-sm-2 col-form-label">Date<span class="req-star">*</span></label>
+                        <div class="col-sm-3">
+                            <input type="text" id="date" asp-for="Invoice.Date" class="form-control" value="@Convert.ToDateTime(@Model.Invoice.Date).ToString("MM/dd/yyyy")">
+                            <span asp-validation-for="Invoice.Date" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button style="margin-right:.5em" type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                        <a class="btn btn-danger waves-effect waves-light" asp-controller="Invoice" asp-action="Index">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#date').datepicker({
+                autoclose: true,
+                format: "mm/dd/yyyy"
+            });
+
+        });
+    </script>
+}

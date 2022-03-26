@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace CLIENT.Controllers
 {
-    public class CustomerController : Controller
+    public class InvoiceController : Controller
     {
-        private readonly ICustomerRepository _customerRepository;
-        public CustomerController(ICustomerRepository customerRepository)
+        private readonly IInvoiceRepository _invoiceRepository;
+        public InvoiceController(IInvoiceRepository invoiceRepository)
         {
-            _customerRepository = customerRepository;
+            _invoiceRepository = invoiceRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<Customer> customers = await _customerRepository.GetAllData();
+            List<Invoice> invoices = await _invoiceRepository.GetAllData();
+            List<CustomerVM> customers = await _invoiceRepository.GetCustomer();
 
-            return View(new MasterDataVM { Customers = customers });
+            return View(new MasterDataVM { Invoices = invoices, CustomerVMs = customers });
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> Index(Customer customer)
+        public async Task<IActionResult> Index(Invoice invoice)
         {
-            var response = await _customerRepository.AddCustomer(customer);
+            var response = await _invoiceRepository.AddInvoice(invoice);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 TempData["MessageInput"] = "Success Added Data.";
@@ -40,15 +40,16 @@ namespace CLIENT.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var response = await _customerRepository.GetCustomerById(id);
-            List<Customer> customers = await _customerRepository.GetAllData();
-            return View(new MasterDataVM { Customers = customers, Customer = response });
+            var response = await _invoiceRepository.GetInvoiceById(id);
+            List<Invoice> invoices = await _invoiceRepository.GetAllData();
+
+            return View(new MasterDataVM { Invoices = invoices, Invoice = response});
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(Customer customer)
+        public async Task<IActionResult> Update(Invoice invoice)
         {
-            var response = await _customerRepository.UpdateCustomer(customer);
+            var response = await _invoiceRepository.UpdateInvoice(invoice);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 TempData["MessageUpdate"] = "Success Updated Data.";
@@ -62,7 +63,7 @@ namespace CLIENT.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var response = await _customerRepository.DeleteCustomer(id);
+            var response = await _invoiceRepository.DeleteInvoice(id);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {

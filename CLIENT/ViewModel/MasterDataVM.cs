@@ -7,5 +7,9 @@ namespace CLIENT.ViewModel
     {
         public List<Customer> Customers { get; set; }
         public Customer Customer { get; set; }
+        
+        public List<Invoice> Invoices { get; set; }
+        public List<CustomerVM> CustomerVMs { get; set; }
+        public Invoice Invoice { get; set; }
     }
 }

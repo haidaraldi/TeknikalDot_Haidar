@@ -76,7 +76,7 @@ namespace API.Repository
 
         public async Task<IEnumerable<CustomerVM>> GetCustomer()
         {
-            var invoices = await _context.Customers.Select(x=> new CustomerVM { CustomerID = x.CustomerId, FullName = string.Join(" ", x.FirstName, x.LastName)})        
+            var invoices = await _context.Customers.Where(x=> x.Invoices.Count == 0).Select(x=> new CustomerVM { CustomerID = x.CustomerId, FullName = string.Join(" ", x.FirstName, x.LastName)})        
               .ToListAsync();
 
             return invoices;
